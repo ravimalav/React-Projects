@@ -63,6 +63,17 @@ const MainNavigation = () => {
                   About
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/contactus"
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  onClick={state ? otherLinkhandler : ""}
+                >
+                  Contact Us
+                </NavLink>
+              </li>
             </ul>
           </Nav>
 

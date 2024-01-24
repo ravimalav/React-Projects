@@ -1,4 +1,4 @@
-import MainNavigation from "../MainNavigation";
+import MainNavigation from "../../bootstrap-component/MainNavigation";
 
 const ErrorPage = () => {
   return (
