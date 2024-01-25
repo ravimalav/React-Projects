@@ -1,10 +1,13 @@
 import { useRef } from "react";
 import classes from "./ContactUs.module.css";
+import { useParams } from "react-router-dom";
 
 const ContactUs = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const mobileNumberRef = useRef();
+  const param = useParams();
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const details = {
@@ -33,6 +36,7 @@ const ContactUs = () => {
   };
   return (
     <section className={classes.control} onSubmit={onSubmitHandler}>
+      <p>{param.productId}</p>
       <form>
         <div>
           <label htmlFor="name">Name</label>

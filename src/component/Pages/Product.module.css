@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.image-container {
+  background-color: blueviolet;
+}
+
+.details-container {
+  background-color: blue;
+}

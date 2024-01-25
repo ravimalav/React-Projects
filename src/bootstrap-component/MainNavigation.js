@@ -8,13 +8,13 @@ import GridCard from "./GridCard";
 import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
-  const [state, setState] = useState(false);
-  const homeLinkHandler = () => {
-    setState(true);
-  };
-  const otherLinkhandler = () => {
-    setState(false);
-  };
+  // const [state, setState] = useState(false);
+  // const homeLinkHandler = () => {
+  //   setState(true);
+  // };
+  // const otherLinkhandler = () => {
+  //   setState(false);
+  // };
 
   return (
     <>
@@ -30,47 +30,27 @@ const MainNavigation = () => {
           <Nav className={classes.header}>
             <ul className={classes.list}>
               <li>
-                <NavLink
-                  to="/home"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  end
-                  onClick={homeLinkHandler}
-                >
+                <NavLink to="/home" activeClassName={classes.active}>
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/store"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  onClick={state ? otherLinkhandler : ""}
-                >
+                <NavLink to="/store" activeClassName={classes.active}>
                   Store
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  onClick={state ? otherLinkhandler : ""}
-                >
+                <NavLink to="/about" activeClassName={classes.active}>
                   About
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/contactus"
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  onClick={state ? otherLinkhandler : ""}
-                >
+                <NavLink to="/product" activeClassName={classes.active}>
+                  Product
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/contactus" activeClassName={classes.active}>
                   Contact Us
                 </NavLink>
               </li>
@@ -80,7 +60,7 @@ const MainNavigation = () => {
           {/* <Cart /> */}
         </Container>
       </Navbar>
-      <TopHeader state={state} />
+      <TopHeader />
     </>
   );
 };
