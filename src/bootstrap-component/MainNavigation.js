@@ -4,18 +4,10 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Cart from "../component/Cart/Cart";
 import TopHeader from "../component/header/TopHeader";
-import GridCard from "./GridCard";
+
 import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
-  // const [state, setState] = useState(false);
-  // const homeLinkHandler = () => {
-  //   setState(true);
-  // };
-  // const otherLinkhandler = () => {
-  //   setState(false);
-  // };
-
   return (
     <>
       <Navbar
@@ -26,7 +18,12 @@ const MainNavigation = () => {
         className="bg-body-tertiary "
       >
         <Container>
-          <Navbar.Brand href="#home">SQ</Navbar.Brand>
+          <Navbar.Brand>
+            {" "}
+            <NavLink to="/" activeClassName={classes.active}>
+              SQ
+            </NavLink>{" "}
+          </Navbar.Brand>
           <Nav className={classes.header}>
             <ul className={classes.list}>
               <li>
@@ -52,6 +49,11 @@ const MainNavigation = () => {
               <li>
                 <NavLink to="/contactus" activeClassName={classes.active}>
                   Contact Us
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/auth" activeClassName={classes.active}>
+                  Login
                 </NavLink>
               </li>
             </ul>

@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
-import RootLayout from "./component/Root/RootLayout";
 
 import About from "./component/Pages/About";
 import Store from "./bootstrap-component/Store";
@@ -10,26 +9,17 @@ import ContactUs from "./component/Pages/ContactUs";
 import MainNavigation from "./bootstrap-component/MainNavigation";
 import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Product from "./component/Pages/Product";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <RootLayout />,
-//     errorElement: <ErrorPage />,
-//     children: [
-//       { path: "/home", element: <Home /> },
-//       { path: "/store", element: <Store /> },
-//       { path: "/about", element: <About /> }, // Add the Route for /about
-//       { path: "contactus", element: <ContactUs /> },
-//     ],
-//   },
-// ]);
+import GridCard from "./bootstrap-component/GridCard";
+import Layout from "./component/layout/Layout";
+import Login from "./component/Pages/Login";
 
 function App() {
   return (
-    <div>
-      <MainNavigation />
+    <Layout>
       <Switch>
+        <Route path="/" exact>
+          <GridCard />
+        </Route>
         <Route path="/home" exact>
           <Home />
         </Route>
@@ -48,15 +38,11 @@ function App() {
         <Route path="/product/:productId" exact>
           <ContactUs />
         </Route>
+        <Route path="/auth" exact>
+          <Login />
+        </Route>
       </Switch>
-      <Footer />
-    </div>
-    // {/* <RouterProvider router={router} /> */}
-    // <CartProvider>
-    //   <NavBar />
-    //   <TopHeader />
-    //   <GridCard />
-    //   <Footer />
+    </Layout>
     // </CartProvider>
   );
 }
