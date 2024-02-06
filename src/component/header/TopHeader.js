@@ -7,11 +7,10 @@ const TopHeader = (props) => {
   return (
     <header
       style={{
-        maxHeight: "15rem",
-        height: headerHeight,
-        maxWidth: "100vw",
-        backgroundColor: "grey",
-        marginTop: "121px",
+        // height: "0rem",
+        // maxWidth: "100vw",
+        // backgroundColor: "grey",
+        marginTop: "80px",
         display: "flex",
         justifyContent: "center",
         paddingTop: "35px",
@@ -19,8 +18,8 @@ const TopHeader = (props) => {
         alignItems: "center",
       }}
     >
-      <h1>ShoppersQueue</h1>
-      {props.state ? (
+      {/* <h1>Shop Cart</h1> */}
+      {/* {props.state ? (
         <div
           style={{
             display: "flex",
@@ -36,7 +35,7 @@ const TopHeader = (props) => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </header>
   );
 };

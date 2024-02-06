@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set minimum height to at least 100% of the viewport height */
+  bottom: 0;
+}
+
+main {
+  flex: 1; /* Allow the main content to grow and take remaining space */
+}
+
+footer {
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+.emptyBox {
+  background-color: white;
+  height: 1.7rem;
+  width: 100%;
+}

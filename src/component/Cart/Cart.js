@@ -1,35 +1,61 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartToggler from "../../bootstrap-component/CartToggler";
 import CartContext from "../../store/Cart-Context";
+import LoginContext from "../../store/LoginContext";
 
 const Cart = () => {
-  const cartCntx = useContext(CartContext);
+  const cartCtx = useContext(CartContext);
+  const authCtx = useContext(LoginContext);
   const [state, setState] = useState(false);
-  const onClickHandler = () => {
-    setState(true);
-  };
+  const [cartItem, setCartItem] = useState();
 
+  // const totalItemInCart = cartCtx.items.reduce((currNumber, item) => {
+  //   return currNumber + item.quantity;
+  // }, 0);
+  const crudMail = authCtx.email.replace(/[^a-zA-Z]/g, "");
+
+  const onClickHandler = async () => {
+    try {
+      const response = await fetch(
+        `https://crudcrud.com/api/80c48cee13bf4a3aac0d3c9b6edfe70b/cart${crudMail}`
+      );
+      const data = await response.json();
+
+      setCartItem(data);
+      setState(true);
+    } catch (err) {
+      console.log("error is", err);
+    }
+  };
   const onCloseHandler = () => {
     setState(false);
   };
 
-  const totalQunatity = cartCntx.items.reduce((currNumber, item) => {
-    return currNumber + item.quantity;
-  }, 0);
+  useEffect(() => {
+    cartCtx.getCartLength();
+  }, [cartCtx.cartLength]);
 
   return (
     <>
       <button
         style={{
           background: "none",
-          border: "1px solid white",
-          borderRadius: "round 2px",
+          border: "none",
+          borderRadius: "none",
+          fontWeight: "500",
+          fontSize: "1.2rem",
         }}
         onClick={onClickHandler}
       >
-        <span>cart</span> <span>{totalQunatity}</span>{" "}
+        <span>cart</span> <span>{cartCtx.cartLength}</span>{" "}
       </button>
-      {state && <CartToggler onClose={onCloseHandler} />}
+      {state && (
+        <CartToggler
+          onClose={onCloseHandler}
+          data={cartItem}
+          onChange={onClickHandler}
+        />
+      )}
     </>
   );
 };

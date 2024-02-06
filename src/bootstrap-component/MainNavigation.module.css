@@ -3,13 +3,14 @@
   margin: auto;
   padding: 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .list {
   display: flex;
   gap: 1rem;
   color: white;
+  right: 0;
 }
 
 .list a {
@@ -21,4 +22,24 @@
 .list a.active {
   color: var(--color-primary-800);
   text-decoration: underline;
+}
+
+.simple {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.rightTop {
+  display: flex;
+  right: 0;
+  justify-content: space-between;
+  justify-items: right;
+}
+
+.rightTop button {
+  background: none;
+  border: none;
+  font-weight: 500;
+  color: white;
 }

@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import CartContext from "../store/Cart-Context";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import ProductContext from "../store/ProductContext";
 
 const GridCard = () => {
   const productsArr = [
@@ -46,42 +48,58 @@ const GridCard = () => {
   ];
 
   const cartCntx = useContext(CartContext);
+  const productCtx = useContext(ProductContext);
+  const history = useHistory();
 
   const addToCartHandler = (id) => {
+    console.log("cartContex", cartCntx.items);
     const item = productsArr.filter((item) => item.id === id);
-    console.log(item);
+    // console.log(item);
     cartCntx.addItem({ ...item[0], quantity: 1 });
+  };
+
+  const onClickHandler = (product) => {
+    productCtx.addProductDetail(product);
+    history.replace("product");
   };
 
   const products = productsArr.map((product, index) => {
     return (
       <Col xs lg={6} key={index}>
         <Card style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Title>{product.title}</Card.Title>
-            <Card.Img
-              src={product.imageUrl}
+          <button
+            style={{ background: "none", border: "none" }}
+            onClick={onClickHandler.bind(null, product)}
+          >
+            <Card.Body>
+              <Card.Title>{product.title}</Card.Title>
+              <Card.Img
+                src={product.imageUrl}
+                style={{
+                  maxHeight: "20rem",
+                  maxWidth: "20rem",
+                }}
+              />
+            </Card.Body>
+          </button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              marginBottom: "0px",
+            }}
+          >
+            <span>Rs.{product.price}</span>
+            <Button
               style={{
-                maxHeight: "20rem",
-                maxWidth: "20rem",
+                background: "#230052",
+                border: "none",
               }}
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                marginBottom: "0px",
-              }}
+              onClick={addToCartHandler.bind(null, product.id)}
             >
-              <span>Rs.{product.price}</span>
-              <Button
-                variant="primary"
-                onClick={addToCartHandler.bind(null, product.id)}
-              >
-                Add-To-Cart
-              </Button>
-            </div>
-          </Card.Body>
+              Add-To-Cart
+            </Button>
+          </div>
         </Card>
       </Col>
     );

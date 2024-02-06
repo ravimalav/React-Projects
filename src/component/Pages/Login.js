@@ -23,12 +23,12 @@ const Login = () => {
       }
     );
     const data = await response.json();
-
-    if (data.registerd) {
-      authCtx.addToken(data.idToken);
-      history.replace("/");
-      console.log("data from backend", data);
-    } else {
+    console.log(data);
+    if (data.registered) {
+      authCtx.addToken(data.idToken, data.email);
+      history.replace("/home");
+    }
+    if (data && data.error) {
       console.log(data.error.message);
     }
   };
@@ -40,7 +40,7 @@ const Login = () => {
           <input type="email" name="email" id="email" required ref={emailRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="password">Email</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"

@@ -1,0 +1,8 @@
+.container {
+  height: 70vh;
+  width: 100wh;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}

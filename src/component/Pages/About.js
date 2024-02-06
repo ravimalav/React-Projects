@@ -1,15 +1,8 @@
-import { Card, Container, Row, Col } from "react-bootstrap";
+import classes from "./About.module.css";
 
 const About = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-      }}
-    >
+    <div className={classes.container}>
       <div>
         <img src="An boy using laptop" />
       </div>

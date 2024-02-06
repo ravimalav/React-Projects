@@ -1,27 +1,30 @@
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import About from "./component/Pages/About";
-import Store from "./bootstrap-component/Store";
+import Store from "./component/Pages/Store";
 import Home from "./component/Pages/Home";
-import Footer from "./bootstrap-component/Footer";
-import ErrorPage from "./component/Pages/Error";
+
 import ContactUs from "./component/Pages/ContactUs";
-import MainNavigation from "./bootstrap-component/MainNavigation";
-import { Switch } from "react-router-dom/cjs/react-router-dom.min";
+
+import { Redirect, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Product from "./component/Pages/Product";
 import GridCard from "./bootstrap-component/GridCard";
 import Layout from "./component/layout/Layout";
 import Login from "./component/Pages/Login";
+import { useContext } from "react";
+import LoginContext from "./store/LoginContext";
 
 function App() {
+  const authCtx = useContext(LoginContext);
+  console.log("user mail", authCtx.email);
   return (
     <Layout>
       <Switch>
         <Route path="/" exact>
-          <GridCard />
+          <Home />
         </Route>
         <Route path="/home" exact>
-          <Home />
+          <GridCard />
         </Route>
         <Route path="/store" exact>
           <Store />
@@ -33,7 +36,8 @@ function App() {
           <ContactUs />
         </Route>
         <Route path="/product" exact>
-          <Product />
+          {authCtx.isLoggedIn && <Product />}
+          {!authCtx.isLoggedIn && <Redirect to="/auth" />}
         </Route>
         <Route path="/product/:productId" exact>
           <ContactUs />
@@ -43,7 +47,6 @@ function App() {
         </Route>
       </Switch>
     </Layout>
-    // </CartProvider>
   );
 }
 

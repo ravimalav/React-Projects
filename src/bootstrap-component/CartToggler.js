@@ -2,73 +2,57 @@ import React, { useContext } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import classes from "./CartToggler.module.css";
+
+import LoginContext from "../store/LoginContext";
 import CartContext from "../store/Cart-Context";
 
 const CartToggler = (props) => {
-  //   const cartElements = [
-  //     {
-  //       title: "Colors",
+  const authCtx = useContext(LoginContext);
+  const cartCtx = useContext(CartContext);
+  const crudMail = authCtx.email.replace(/[^a-zA-Z]/g, "");
+  const removeCartItemHandler = async (id) => {
+    try {
+      const response = await fetch(
+        `https://crudcrud.com/api/80c48cee13bf4a3aac0d3c9b6edfe70b/cart${crudMail}/${id}`,
+        {
+          method: "delete",
+        }
+      );
+      cartCtx.removeItem();
+      props.onChange();
+    } catch {
+      console.log("error in deletion");
+    }
+  };
 
-  //       price: 100,
-
-  //       imageUrl:
-  //         "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-
-  //       quantity: 2,
-  //     },
-
-  //     {
-  //       title: "Black and white Colors",
-
-  //       price: 50,
-
-  //       imageUrl:
-  //         "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-
-  //       quantity: 3,
-  //     },
-
-  //     {
-  //       title: "Yellow and Black Colors",
-
-  //       price: 70,
-
-  //       imageUrl:
-  //         "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-
-  //       quantity: 1,
-  //     },
-  //   ];
-
-  const cartCntx = useContext(CartContext);
-
-  const removeCartItemHandler = () => {};
-
-  const cartItems = cartCntx.items.map((item, index) => {
+  const cartItems = props.data.map((item, index) => {
     return (
       <Row key={index}>
         <Col lg={4}>
           {
             <div className="text-center">
               <img
-                src={item.imageUrl}
+                src={item.item.imageUrl}
                 style={{ maxHeight: "4rem", maxWidth: "4rem" }}
-                alt={item.title}
+                alt={item.item.title}
               />
-              <span>{item.title}</span>
+
+              <div>{item.item.title}</div>
             </div>
           }
         </Col>
-        <Col lg={4}>{item.price}</Col>
+        <Col lg={4}>
+          <h5>Rs.{item.item.price}</h5>
+        </Col>
         <Col lg={4}>
           <div style={{ display: "flex", justifyContent: "space-evenly" }}>
             <span style={{ border: "solid black 1px", padding: "10px" }}>
-              {item.quantity}
+              {item.item.quantity}
             </span>
 
             <Button
               variant="danger"
-              onClick={removeCartItemHandler.bind(null, index)}
+              onClick={removeCartItemHandler.bind(null, item._id)}
             >
               REMOVE
             </Button>
@@ -79,48 +63,48 @@ const CartToggler = (props) => {
   });
 
   const htmlElement = document.getElementById("overlay");
+  const backDrop = <div className={classes.backdrop} onClick={props.onClose} />;
   const overlay = (
-    <div className={classes["cart-overlay"]}>
-      <Card
-        className={classes["cart-modal"]}
-        //   style={{ width: "50vw", height: "100vh", float: "right" }}
-        //   className="m-5"
-      >
-        <Card.Body>
-          <Card.Title className="text-center  ">
-            <span>Cart</span>
-            <button
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                float: "right",
-                marginTop: "0",
-              }}
-              onClick={props.onClose}
-              className={classes["close-button"]}
-            >
-              X
-            </button>
-          </Card.Title>
-          <Container>
-            <Row>
-              <Col lg={4} style={{ textDecoration: "underline" }}>
-                <h5>ITEM</h5>
-              </Col>
-              <Col lg={4} style={{ textDecoration: "underline" }}>
-                <h5>PRICE</h5>
-              </Col>
-              <Col lg={4} style={{ textDecoration: "underline" }}>
-                <h5>QUANTITY</h5>
-              </Col>
-            </Row>
-            {cartItems}
-          </Container>
-        </Card.Body>
-      </Card>
-    </div>
+    <>
+      <div className={classes["cart-overlay"]}>
+        <Card className={classes["cart-modal"]}>
+          <Card.Body>
+            <Card.Title className="text-center  ">
+              <span>Cart</span>
+              <button
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  float: "right",
+                  marginTop: "0",
+                }}
+                onClick={props.onClose}
+                className={classes["close-button"]}
+              >
+                X
+              </button>
+            </Card.Title>
+            <Container>
+              <Row>
+                <Col lg={4} style={{ textDecoration: "underline" }}>
+                  <h5>ITEM</h5>
+                </Col>
+                <Col lg={4} style={{ textDecoration: "underline" }}>
+                  <h5>PRICE</h5>
+                </Col>
+                <Col lg={4} style={{ textDecoration: "underline" }}>
+                  <h5>QUANTITY</h5>
+                </Col>
+              </Row>
+
+              {cartItems}
+            </Container>
+          </Card.Body>
+        </Card>
+      </div>
+    </>
   );
-  return ReactDOM.createPortal(overlay, htmlElement);
+  return <>{ReactDOM.createPortal(overlay, htmlElement)}</>;
 };
 
 export default CartToggler;
